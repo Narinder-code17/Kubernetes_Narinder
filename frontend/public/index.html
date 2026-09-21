@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docker To-Do Application</title>
+</head>
+<body>
+
+    <h1>Docker To-Do Application</h1>
+
+    <form id="todoForm">
+
+        <label for="itemName">Item Name:</label>
+        <input
+            type="text"
+            id="itemName"
+            name="itemName"
+            required
+        >
+
+        <br><br>
+
+        <label for="itemDescription">Item Description:</label>
+        <textarea
+            id="itemDescription"
+            name="itemDescription"
+            required
+        ></textarea>
+
+        <br><br>
+
+        <button type="submit">Submit To-Do</button>
+
+    </form>
+
+    <p id="message"></p>
+
+    <script>
+        document.getElementById("todoForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+
+            const itemName = document.getElementById("itemName").value;
+            const itemDescription = document.getElementById("itemDescription").value;
+
+            try {
+                const response = await fetch("/api/submit", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        itemName: itemName,
+                        itemDescription: itemDescription
+                    })
+                });
+
+                const data = await response.json();
+
+                document.getElementById("message").textContent = data.message || data.error;
+
+            } catch (error) {
+                document.getElementById("message").textContent =
+                    "Unable to connect to Flask backend.";
+            }
+        });
+    </script>
+
+</body>
+</html>
