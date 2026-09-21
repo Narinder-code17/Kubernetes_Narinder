@@ -785,6 +785,3 @@ The final application successfully processed a To-Do submission and returned:
 ```text
 To-Do item received successfully
 ```
-
-The project demonstrates the complete workflow of taking a containerized application and deploying it as a multi-component application on Kubernetes.
-```
